@@ -190,14 +190,14 @@
             <button onclick="startTest('pre')" id="btn-pretest" class="relative overflow-hidden group p-6 rounded-2xl bg-white border border-gray-200 shadow-sm hover:shadow-xl transition-all text-left w-full">
               <div class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center mb-4" id="icon-bg-pre"><i class="fas fa-file-signature text-2xl text-blue-500" id="icon-pre"></i></div>
               <h3 class="text-lg font-bold text-gray-800 mb-1">1. Pre-Test</h3>
-              <p class="text-sm text-gray-500 mb-4 h-10" id="pretest-status">วัดพื้นฐานก่อนเริ่มกิจกรรม (ทำได้ 1 ครั้ง)</p>
+              <p class="text-sm text-gray-500 mb-4 h-10" id="pretest-status">แบบทดสอบก่อนเริ่มกิจกรรม (ทำได้ 1 ครั้ง)</p>
               <div class="text-blue-600 text-sm font-medium" id="pretest-action">เริ่มทำแบบทดสอบ <i class="fas fa-arrow-right"></i></div>
             </button>
 
             <button onclick="startTest('post')" id="btn-posttest" disabled class="relative overflow-hidden group p-6 rounded-2xl bg-gray-50 border border-gray-200 shadow-none cursor-not-allowed transition-all text-left opacity-60 w-full">
               <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center mb-4" id="icon-bg-post"><i class="fas fa-file-alt text-2xl text-gray-500 group-hover:text-orange-500 transition-colors" id="icon-post"></i></div>
               <h3 class="text-lg font-bold text-gray-800 mb-1">2. Post-Test</h3>
-              <p class="text-sm text-gray-500 mb-4 h-10" id="posttest-status">วัดผลหลังเรียน (ต้องผ่าน 50%)</p>
+              <p class="text-sm text-gray-500 mb-4 h-10" id="posttest-status">แบบทดสอบหลังร่วมกิจกรรม (ต้องผ่าน 50%)</p>
               <div class="text-gray-400 text-sm font-medium" id="posttest-action">รอทำ Pre-Test <i class="fas fa-lock ml-1"></i></div>
             </button>
 
@@ -210,7 +210,7 @@
 
             <button onclick="requestCertificate()" id="btn-cert" disabled class="relative overflow-hidden group p-6 rounded-2xl bg-gray-50 border border-gray-200 shadow-none cursor-not-allowed transition-all text-left opacity-60 w-full">
               <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center mb-4" id="icon-bg-cert"><i class="fas fa-award text-2xl text-gray-500 group-hover:text-purple-500 transition-colors" id="icon-cert"></i></div>
-              <h3 class="text-lg font-bold text-gray-800 mb-1">4. ใบประกาศ</h3>
+              <h3 class="text-lg font-bold text-gray-800 mb-1">4. ใบประกาศนียบัตร</h3>
               <p class="text-sm text-gray-500 mb-4 h-10" id="cert-status">ดาวน์โหลดและพิมพ์ใบประกาศ</p>
               <div class="text-gray-400 text-sm font-medium" id="cert-action">รอทำแบบประเมิน <i class="fas fa-lock ml-1"></i></div>
             </button>
@@ -244,7 +244,7 @@
              <button onclick="navTo('dashboard-section')" class="text-gray-500 hover:text-gray-800 bg-gray-100 p-2 rounded-lg transition"><i class="fas fa-times text-xl"></i></button>
          </div>
          
-         <div class="bg-blue-50 text-blue-800 p-4 rounded-xl mb-6 text-sm border border-blue-100">
+         <div class="bg-blue-50 text-red-800 p-4 rounded-xl mb-6 text-sm border border-blue-100">
              <i class="fas fa-info-circle mr-2"></i> <b>คำแนะนำ:</b> กรุณาทำแบบประเมินในกรอบด้านล่างให้เสร็จสิ้น จากนั้นเลื่อนลงมากดปุ่ม <span class="text-green-600 font-bold">"ทำแบบประเมินเรียบร้อยแล้ว"</span> ด้านล่างสุดเพื่อปลดล็อคใบประกาศนียบัตร
          </div>
 
@@ -750,6 +750,7 @@
   </script>
 </body>
 </html>
+
 
 
 

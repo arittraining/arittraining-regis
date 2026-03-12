@@ -59,30 +59,22 @@
         <div class="flex flex-wrap justify-center items-center gap-4 md:gap-2 mb-12 max-w-6xl mx-auto">
           <div class="flex flex-col items-center group w-24"><div class="w-14 h-14 rounded-full bg-white border-2 border-brand-100 text-brand-500 flex items-center justify-center text-xl shadow-sm mb-2"><i class="fas fa-user-plus"></i></div><p class="text-xs font-medium text-gray-600 text-center">Register</p></div>
           <div class="hidden md:flex text-gray-300"><i class="fas fa-angle-right"></i></div>
-
           <div class="flex flex-col items-center group w-24"><div class="w-14 h-14 rounded-full bg-white border-2 border-brand-100 text-brand-500 flex items-center justify-center text-xl shadow-sm mb-2"><i class="fas fa-sign-in-alt"></i></div><p class="text-xs font-medium text-gray-600 text-center">Login</p></div>
           <div class="hidden md:flex text-gray-300"><i class="fas fa-angle-right"></i></div>
-
           <div class="flex flex-col items-center group w-24"><div class="w-14 h-14 rounded-full bg-white border-2 border-brand-100 text-brand-500 flex items-center justify-center text-xl shadow-sm mb-2"><i class="fas fa-file-signature"></i></div><p class="text-xs font-medium text-gray-600 text-center">Pre-Test</p></div>
           <div class="hidden md:flex text-gray-300"><i class="fas fa-angle-right"></i></div>
-
           <div class="flex flex-col items-center group w-24"><div class="w-14 h-14 rounded-full bg-white border-2 border-brand-100 text-brand-500 flex items-center justify-center text-xl shadow-sm mb-2"><i class="fas fa-file-alt"></i></div><p class="text-xs font-medium text-gray-600 text-center">Post-Test</p></div>
           <div class="hidden md:flex text-gray-300"><i class="fas fa-angle-right"></i></div>
-
           <div class="flex flex-col items-center group w-24"><div class="w-14 h-14 rounded-full bg-white border-2 border-brand-100 text-brand-500 flex items-center justify-center text-xl shadow-sm mb-2"><i class="fas fa-poll-h"></i></div><p class="text-xs font-medium text-gray-600 text-center">Survey</p></div>
           <div class="hidden md:flex text-gray-300"><i class="fas fa-angle-right"></i></div>
-
           <div class="flex flex-col items-center group w-24"><div class="w-14 h-14 rounded-full bg-white border-2 border-brand-100 text-brand-500 flex items-center justify-center text-xl shadow-sm mb-2"><i class="fas fa-award"></i></div><p class="text-xs font-medium text-gray-600 text-center">Certificate</p></div>
         </div>
       </div>
       
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto px-2">
         <div onclick="navTo('register-section')" class="bg-white p-6 rounded-2xl shadow-sm hover:shadow-xl transition cursor-pointer border border-gray-100 group"><div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600 mb-4 group-hover:scale-110 transition"><i class="fas fa-user-plus text-xl"></i></div><h3 class="font-bold text-gray-800 mb-1">ลงทะเบียนผู้ใช้งาน</h3><p class="text-xs text-gray-500">สำหรับผู้ใช้งานใหม่</p></div>
-
         <div onclick="navTo('login-section')" class="bg-white p-6 rounded-2xl shadow-sm hover:shadow-xl transition cursor-pointer border border-gray-100 group"><div class="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center text-orange-500 mb-4 group-hover:scale-110 transition"><i class="fas fa-sign-in-alt text-xl"></i></div><h3 class="font-bold text-gray-800 mb-1">เข้าสู่ระบบ</h3><p class="text-xs text-gray-500">Pretest > Postest > Survey</p></div>
-
         <div onclick="loadParticipantList()" class="bg-white p-6 rounded-2xl shadow-sm hover:shadow-xl transition cursor-pointer border border-gray-100 group"><div class="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center text-gray-600 mb-4 group-hover:scale-110 transition"><i class="fas fa-list text-xl"></i></div><h3 class="font-bold text-gray-800 mb-1">ตรวจสอบรายชื่อ</h3><p class="text-xs text-gray-500">ตรวจสอบสถานะการลงทะเบียน</p></div>
-
         <div onclick="navTo('cert-section')" class="bg-white p-6 rounded-2xl shadow-sm hover:shadow-xl transition cursor-pointer border border-gray-100 group"><div class="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center text-purple-600 mb-4 group-hover:scale-110 transition"><i class="fas fa-certificate text-xl"></i></div><h3 class="font-bold text-gray-800 mb-1">ค้นหาใบประกาศ</h3><p class="text-xs text-gray-500">พิมพ์ RMUTL Mail ค้นหา</p></div>
       </div>
     </section>
@@ -270,15 +262,14 @@
   <script>
     // ==========================================
     // กำหนด URL ของ Google Apps Script ของคุณที่นี่
-    // (URL ที่ได้จากการ Deploy Code.gs แบบ Web App)
     // ==========================================
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx6u0JGj2MvVhwJnqVohIFe5BvGQFTZ34B0n4az-Br-1U02iafjsoDxivYPXCNU3A3Leg/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx6u0JGj2MvVhwJnqVohIFe5BvGQFTZ34B0n4az-Br-1U02iafjsoDxivYPXCNU3A3Leg/exec'; 
 
     let currentUser = null;
     let currentExamType = '';
     let examTimerInterval = null;
 
-    // ระบบเชื่อมต่อ API ไปยัง Google Script แทน google.script.run
+    // ฟังก์ชันเชื่อมต่อ API (แทน google.script.run)
     async function callAPI(action, data) {
         try {
             const response = await fetch(SCRIPT_URL, {
@@ -313,23 +304,23 @@
         e.preventDefault();
         const name = document.getElementById('reg-name').value;
         const email = document.getElementById('reg-email').value.trim().toLowerCase();
-
-        // ตรวจสอบโดเมนอีเมลตามที่คุณต้องการ
+        
         if (!email.endsWith('@rmutl.ac.th') && !email.endsWith('@live.rmutl.ac.th')) {
-            return Swal.fire('อีเมลไม่ถูกต้อง', 'กรุณาใช้อีเมล @rmutl.ac.th หรือ @live.rmutl.ac.th เท่านั้น', 'warning');
+            Swal.fire({
+                icon: 'warning',
+                title: 'อีเมลไม่ถูกต้อง',
+                text: 'กรุณาใช้อีเมล @rmutl.ac.th หรือ @live.rmutl.ac.th ในการลงทะเบียนเท่านั้น'
+            });
+            return;
         }
 
         showLoading(true);
-        const res = await callAPI('registerUser', {name, email});
+        const res = await callAPI('registerUser', { name, email });
         showLoading(false);
-
+        
         if(res.status === 'success') {
             Swal.fire('สำเร็จ', 'ลงทะเบียนเรียบร้อยแล้ว กรุณาเข้าสู่ระบบ', 'success');
-            
-            // ล้างข้อมูลช่องกรอก
-            document.getElementById('reg-name').value = '';
-            document.getElementById('reg-email').value = '';
-            
+            document.getElementById('register-form').reset();
             navTo('login-section');
         } else {
             Swal.fire('ข้อผิดพลาด', res.message, 'error');
@@ -344,13 +335,10 @@
         showLoading(true);
         const res = await callAPI('loginUser', email);
         showLoading(false);
-
+        
         if(res.status === 'success') {
             currentUser = res.user;
-            
-            // ล้างค่าในช่องกรอกเมื่อเข้าสู่ระบบสำเร็จ
             document.getElementById('login-email').value = '';
-
             renderDashboard();
             navTo('dashboard-section');
         } else {
@@ -365,7 +353,7 @@
         navTo('home-section');
     }
 
-    // 3. จัดการสถานะปุ่มใน Dashboard (แก้ไขตรรกะ Post-Test ทำซ้ำได้)
+    // 3. จัดการสถานะปุ่มใน Dashboard (ตรรกะ Post-Test ที่ให้ทำซ้ำได้ถ้ายังไม่ผ่าน)
     function renderDashboard() {
         if(!currentUser) return;
         document.getElementById('user-name-display').innerText = currentUser.name;
@@ -404,7 +392,7 @@
                 
                 btnPost.onclick = () => Swal.fire('ข้อมูล', 'คุณสอบผ่าน Post-Test เรียบร้อยแล้ว', 'info');
             } else {
-                // ยังสอบไม่ผ่าน (หรือเพิ่งเข้ามาครั้งแรก) ปลดล็อกปุ่ม
+                // ยังสอบไม่ผ่าน ปลดล็อกปุ่ม
                 btnPost.disabled = false;
                 btnPost.classList.remove('bg-gray-50', 'opacity-60', 'cursor-not-allowed');
                 btnPost.classList.add('bg-white', 'shadow-sm', 'hover:shadow-xl');
@@ -477,7 +465,7 @@
         showLoading(true);
         const res = await callAPI('getExamQuestions', type);
         showLoading(false);
-
+        
         if(res.status === 'success') {
             renderExam(res.questions, type);
             startTimer(res.timeLimit || 15);
@@ -535,8 +523,6 @@
         e.preventDefault();
         clearInterval(examTimerInterval);
         const formData = new FormData(e.target);
-        
-        // แปลง formData ให้เป็น Object ที่ใช้งานง่าย
         const answers = {};
         for (let [key, value] of formData.entries()) {
             answers[key] = value;
@@ -545,7 +531,7 @@
         showLoading(true);
         const res = await callAPI('submitExam', { email: currentUser.email, answers: answers, type: currentExamType });
         showLoading(false);
-
+        
         if(res.status === 'success') {
             let msg = `คุณได้คะแนน ${res.score}/${res.total}`;
             
@@ -559,7 +545,6 @@
 
             Swal.fire('ส่งคำตอบเรียบร้อย', msg, res.passed !== false ? 'success' : 'warning').then(async () => {
                 showLoading(true);
-                // ดึงข้อมูลผู้ใช้มาใหม่เพื่ออัปเดต Dashboard
                 const loginRes = await callAPI('loginUser', currentUser.email);
                 showLoading(false);
                 if(loginRes.status === 'success') {
@@ -631,7 +616,7 @@
                 showLoading(true);
                 const res = await callAPI('updateUserProfile', { email: currentUser.email, newName: result.value });
                 showLoading(false);
-
+                
                 if(res.status === 'success') {
                     currentUser.name = res.newName || result.value;
                     document.getElementById('user-name-display').innerText = currentUser.name;
@@ -648,7 +633,7 @@
         showLoading(true);
         const res = await callAPI('getParticipants', {});
         showLoading(false);
-
+        
         if(res.status === 'success') {
             const tbody = document.getElementById('participant-list-body');
             tbody.innerHTML = '';
@@ -673,7 +658,7 @@
         showLoading(true);
         const res = await callAPI('getCertificate', email);
         showLoading(false);
-
+        
         if(res.status === 'success') {
              Swal.fire({
                 title: 'พบข้อมูล',
@@ -706,5 +691,3 @@
   </script>
 </body>
 </html>
-
-

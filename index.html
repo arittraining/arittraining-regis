@@ -634,7 +634,7 @@
         }
     }
 
-    // 6. ขอรับใบประกาศ (โหลด PDF)
+    // 6. ขอรับใบประกาศ (ดาวน์โหลดจาก Dashboard)
     async function requestCertificate() {
         showLoading(true);
         const res = await callAPI('getCertificate', currentUser.email);
@@ -642,10 +642,16 @@
         
         if(res.status === 'success') {
             Swal.fire({
-                title: 'สำเร็จ',
-                text: 'สร้างใบประกาศนียบัตรเรียบร้อยแล้ว<br><span class="text-gray-500 text-sm">รหัสอ้างอิง: <b>${res.code || '-'}</b></span>`,
+                title: 'สำเร็จ!',
+                html: `
+                    <div class="mb-4 text-gray-600">สร้างใบประกาศนียบัตรเรียบร้อยแล้ว</div>
+                    <div class="bg-purple-50 border border-purple-200 text-purple-700 rounded-xl p-4 inline-block shadow-sm">
+                        <span class="text-sm block mb-1 font-medium">รหัสอ้างอิง (Reference Code)</span>
+                        <span class="font-bold text-xl tracking-wider">${res.code || '-'}</span>
+                    </div>
+                `,
                 icon: 'success',
-                confirmButtonText: 'ดาวน์โหลด / เปิดดู',
+                confirmButtonText: '<i class="fas fa-download mr-2"></i> ดาวน์โหลด / เปิดดู',
                 confirmButtonColor: '#8b5cf6'
             }).then((result) => {
                 if(result.isConfirmed) {
@@ -709,7 +715,7 @@
         }
     }
 
-    // ฟังก์ชันค้นหาใบประกาศ (สำหรับผู้ใช้งานทั่วไป)
+    // ฟังก์ชันค้นหาใบประกาศ (สำหรับผู้ใช้งานทั่วไปในหน้าแรก)
     async function handleCertSearch(e) {
         e.preventDefault();
         const email = document.getElementById('cert-email').value;
@@ -720,10 +726,16 @@
         
         if(res.status === 'success') {
              Swal.fire({
-                title: 'พบข้อมูล',
-                text: 'คลิกเพื่อดาวน์โหลดหรือเปิดดูใบประกาศนียบัตร<br><span class="text-gray-500 text-sm">รหัสอ้างอิง: <b>${res.code || '-'}</b></span>`,
+                title: 'พบข้อมูลใบประกาศ!',
+                html: `
+                    <div class="mb-4 text-gray-600">คลิกเพื่อดาวน์โหลดหรือเปิดดูใบประกาศนียบัตรของคุณ</div>
+                    <div class="bg-purple-50 border border-purple-200 text-purple-700 rounded-xl p-4 inline-block shadow-sm">
+                        <span class="text-sm block mb-1 font-medium">รหัสอ้างอิง (Reference Code)</span>
+                        <span class="font-bold text-xl tracking-wider">${res.code || '-'}</span>
+                    </div>
+                `,
                 icon: 'success',
-                confirmButtonText: 'เปิดใบประกาศ',
+                confirmButtonText: '<i class="fas fa-external-link-alt mr-2"></i> เปิดใบประกาศ',
                 confirmButtonColor: '#8b5cf6'
             }).then((result) => {
                 if(result.isConfirmed) window.open(res.url, '_blank');
@@ -750,6 +762,7 @@
   </script>
 </body>
 </html>
+
 
 
 

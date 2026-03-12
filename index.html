@@ -47,7 +47,7 @@
     <div id="loading" class="hidden fixed inset-0 bg-white/80 backdrop-blur-sm flex justify-center items-center z-[60]">
       <div class="flex flex-col items-center">
         <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-4"></div>
-        <p class="text-gray-500 font-medium animate-pulse">กำลังสื่อสารกับเซิร์ฟเวอร์...</p>
+        <p class="text-gray-500 font-medium animate-pulse">กำลังโหลดข้อมูล...</p>
       </div>
     </div>
 
@@ -399,7 +399,7 @@
                 
                 if (currentUser.post_test_done) {
                     // ทำไปแล้วแต่ตก
-                    document.getElementById('posttest-status').innerText = `ยังไม่ผ่านเกณฑ์ (ได้คะแนน: ${currentUser.post_score})`;
+                    document.getElementById('posttest-status').innerText = `ยังไม่ผ่านเกณฑ์ 50% (คะแนนที่ได้ : ${currentUser.post_score})`;
                     document.getElementById('posttest-action').innerHTML = 'สอบใหม่อีกครั้ง <i class="fas fa-redo ml-1"></i>';
                     document.getElementById('posttest-action').className = 'text-red-500 text-sm font-medium';
                     
@@ -407,7 +407,7 @@
                     document.getElementById('icon-post').className = 'fas fa-file-alt text-2xl text-red-500';
                 } else {
                     // ยังไม่เคยทำ
-                    document.getElementById('posttest-status').innerText = 'พร้อมทำแบบทดสอบ';
+                    document.getElementById('posttest-status').innerText = 'ปลดล็อคแบบทดสอบ';
                     document.getElementById('posttest-action').innerHTML = 'เริ่มทำทดสอบ <i class="fas fa-arrow-right ml-1"></i>';
                     document.getElementById('posttest-action').className = 'text-orange-500 text-sm font-medium';
                     
@@ -477,7 +477,7 @@
 
     // สร้างแบบฟอร์มข้อสอบ
     function renderExam(questions, type) {
-        document.getElementById('exam-title').innerText = type === 'pre' ? 'Pre-Test (ก่อนเรียน)' : 'Post-Test (หลังเรียน)';
+        document.getElementById('exam-title').innerText = type === 'pre' ? 'Pre-Test (ก่อนเริ่มกิจกรรม)' : 'Post-Test (หลังเข้าร่วมกิจกรรม)';
         const container = document.getElementById('exam-container');
         container.innerHTML = '';
         questions.forEach((q, index) => {
@@ -539,7 +539,7 @@
                 if (res.passed) {
                     msg += '<br><br><span class="text-green-500 font-bold text-lg">ยินดีด้วย! คุณผ่านเกณฑ์การทดสอบ</span>';
                 } else {
-                    msg += '<br><br><span class="text-red-500 font-bold text-lg">ยังไม่ผ่านเกณฑ์ (สามารถสอบใหม่ได้)</span>';
+                    msg += '<br><br><span class="text-red-500 font-bold text-lg">ยังไม่ผ่านเกณฑ์ 50% (กรุณาทำใหม่อีกครั้ง)</span>';
                 }
             }
 
@@ -691,3 +691,4 @@
   </script>
 </body>
 </html>
+

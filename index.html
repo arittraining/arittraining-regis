@@ -25,6 +25,7 @@
     @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     .loader { border-top-color: #2563eb; -webkit-animation: spinner 1.5s linear infinite; animation: spinner 1.5s linear infinite; }
     @keyframes spinner { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    .hidden-step { display: none !important; }
   </style>
 </head>
 <body class="flex flex-col min-h-screen text-gray-700">
@@ -43,21 +44,19 @@
 
   <main class="flex-grow container mx-auto px-4 py-8 md:py-12 relative">
     
-    <!-- Loading Screen -->
     <div id="loading" class="hidden fixed inset-0 bg-white/80 backdrop-blur-sm flex justify-center items-center z-[60]">
       <div class="flex flex-col items-center">
         <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-4"></div>
-        <p class="text-gray-500 font-medium animate-pulse">กำลังโหลดข้อมูล...</p>
+        <p class="text-gray-500 font-medium animate-pulse">กำลังสื่อสารกับเซิร์ฟเวอร์...</p>
       </div>
     </div>
 
-    <!-- HOME SECTION -->
     <section id="home-section" class="page-section active-section">
       <div class="text-center mb-16">
         <h3 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Upskill & Reskill ARIT Training</h3>
         <p class="text-gray-500 max-w-2xl mx-auto mb-10 text-lg">ขั้นตอนการเข้าร่วมกิจกรรม</p>
-          <div class="flex flex-wrap justify-center items-center gap-4 md:gap-2 mb-12 max-w-6xl mx-auto">
-
+        
+        <div class="flex flex-wrap justify-center items-center gap-4 md:gap-2 mb-12 max-w-6xl mx-auto">
           <div class="flex flex-col items-center group w-24"><div class="w-14 h-14 rounded-full bg-white border-2 border-brand-100 text-brand-500 flex items-center justify-center text-xl shadow-sm mb-2"><i class="fas fa-user-plus"></i></div><p class="text-xs font-medium text-gray-600 text-center">Register</p></div>
           <div class="hidden md:flex text-gray-300"><i class="fas fa-angle-right"></i></div>
 
@@ -88,7 +87,6 @@
       </div>
     </section>
 
-    <!-- REGISTER SECTION -->
     <section id="register-section" class="page-section">
       <div class="max-w-md mx-auto bg-white p-8 rounded-2xl shadow-lg border border-gray-100 mt-8">
         <div class="text-center mb-8">
@@ -104,7 +102,7 @@
             </div>
           </div>
           <div class="mb-8">
-            <label class="block text-gray-700 font-medium mb-2">RMUTL Mail <span class="text-red-500 text-sm font-normal italic">(ใช้สำหรับล็อกอิน)</span></label>
+            <label class="block text-gray-700 font-medium mb-2">RMUTL Mail <span class="text-red-500 text-sm font-normal italic">(ใช้สำหรับล็อกอินเข้าใช้งาน)</span></label>
             <div class="relative">
                 <i class="fas fa-envelope absolute left-4 top-3.5 text-gray-400"></i>
                 <input type="email" id="reg-email" required class="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 text-sm" placeholder="@rmutl.ac.th หรือ @live.rmutl.ac.th">
@@ -116,7 +114,49 @@
       </div>
     </section>
 
-    <!-- LOGIN SECTION -->
+    <section id="participant-section" class="page-section">
+      <div class="max-w-4xl mx-auto bg-white p-8 rounded-2xl shadow-lg border border-gray-100 mt-8">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold text-gray-800">รายชื่อผู้เข้าร่วม</h2>
+            <button onclick="navTo('home-section')" class="text-gray-500 hover:text-gray-800"><i class="fas fa-times text-xl"></i></button>
+        </div>
+        <div class="overflow-x-auto rounded-xl border border-gray-100">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-gray-50 text-gray-600 border-b border-gray-200">
+                        <th class="p-4 font-medium w-24">ลำดับ</th>
+                        <th class="p-4 font-medium">ชื่อ-นามสกุล</th>
+                    </tr>
+                </thead>
+                <tbody id="participant-list-body">
+                </tbody>
+            </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="cert-section" class="page-section">
+      <div class="max-w-md mx-auto bg-white p-8 rounded-2xl shadow-lg border border-gray-100 mt-8">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold text-gray-800">ค้นหาใบประกาศ</h2>
+            <button onclick="navTo('home-section')" class="text-gray-500 hover:text-gray-800"><i class="fas fa-times text-xl"></i></button>
+        </div>
+        <p class="text-gray-500 mb-6 text-sm">พิมพ์อีเมลที่ใช้ลงทะเบียน เพื่อค้นหาและดาวน์โหลดใบประกาศนียบัตร (ต้องผ่านการประเมินแล้ว)</p>
+        <form onsubmit="handleCertSearch(event)" autocomplete="off">
+          <div class="mb-6">
+            <div class="relative">
+                <i class="fas fa-search absolute left-4 top-3.5 text-gray-400"></i>
+                <input type="email" id="cert-email" oninput="toggleClearCertBtn()" required class="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="ใส่อีเมลของคุณ">
+                <button type="button" id="clear-cert-btn" onclick="clearCertInput()" class="hidden absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-red-500 focus:outline-none transition-colors duration-200">
+                  <i class="fas fa-times"></i>
+                </button>
+            </div>
+          </div>
+          <button type="submit" class="w-full py-3 rounded-xl bg-purple-600 text-white font-medium hover:bg-purple-700 transition shadow-lg shadow-purple-500/30">ค้นหา</button>
+        </form>
+      </div>
+    </section>
+
     <section id="login-section" class="page-section">
         <div class="max-w-md mx-auto bg-white p-8 rounded-2xl shadow-lg border border-gray-100 mt-8">
           <div class="text-center mb-8">
@@ -137,14 +177,15 @@
         </div>
     </section>
 
-    <!-- DASHBOARD SECTION -->
     <section id="dashboard-section" class="page-section">
       <div class="max-w-6xl mx-auto">
           <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-8 flex justify-between items-center flex-wrap gap-4">
               <div>
                   <h2 class="text-xl font-bold text-gray-800 flex items-center gap-2">
                     สวัสดี, <span id="user-name-display" class="text-brand-600">User</span>
-                    <button onclick="editProfileName()" class="text-gray-400 hover:text-brand-500 transition ml-2 focus:outline-none"><i class="fas fa-edit"></i></button>
+                    <button onclick="editProfileName()" class="text-gray-400 hover:text-brand-500 transition ml-2 focus:outline-none" title="แก้ไขชื่อ-นามสกุล">
+                      <i class="fas fa-edit"></i>
+                    </button>
                   </h2>
                   <p class="text-gray-500 text-sm mt-1">ระบบจะปลดล็อคขั้นตอนต่อไปเมื่อทำขั้นตอนปัจจุบันเสร็จสิ้น</p>
               </div>
@@ -152,23 +193,21 @@
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <!-- 1. Pre-Test -->
-            <button onclick="startTest('pre')" id="btn-pretest" class="relative overflow-hidden group p-6 rounded-2xl bg-white border border-gray-200 shadow-sm transition-all text-left w-full">
+            
+            <button onclick="startTest('pre')" id="btn-pretest" class="relative overflow-hidden group p-6 rounded-2xl bg-white border border-gray-200 shadow-sm hover:shadow-xl transition-all text-left w-full">
               <div class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center mb-4" id="icon-bg-pre"><i class="fas fa-file-signature text-2xl text-blue-500" id="icon-pre"></i></div>
               <h3 class="text-lg font-bold text-gray-800 mb-1">1. Pre-Test</h3>
               <p class="text-sm text-gray-500 mb-4 h-10" id="pretest-status">วัดพื้นฐานก่อนเริ่มกิจกรรม (ทำได้ 1 ครั้ง)</p>
               <div class="text-blue-600 text-sm font-medium" id="pretest-action">เริ่มทำแบบทดสอบ <i class="fas fa-arrow-right"></i></div>
             </button>
 
-            <!-- 2. Post-Test -->
             <button onclick="startTest('post')" id="btn-posttest" disabled class="relative overflow-hidden group p-6 rounded-2xl bg-gray-50 border border-gray-200 shadow-none cursor-not-allowed transition-all text-left opacity-60 w-full">
               <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center mb-4" id="icon-bg-post"><i class="fas fa-file-alt text-2xl text-gray-500 group-hover:text-orange-500 transition-colors" id="icon-post"></i></div>
               <h3 class="text-lg font-bold text-gray-800 mb-1">2. Post-Test</h3>
-              <p class="text-sm text-gray-500 mb-4 h-10" id="posttest-status">วัดผลหลังเรียน (ต้องผ่านเกณฑ์)</p>
+              <p class="text-sm text-gray-500 mb-4 h-10" id="posttest-status">วัดผลหลังเรียน (ต้องผ่าน 50%)</p>
               <div class="text-gray-400 text-sm font-medium" id="posttest-action">รอทำ Pre-Test <i class="fas fa-lock ml-1"></i></div>
             </button>
 
-            <!-- 3. Survey -->
             <button onclick="navTo('survey-section')" id="btn-survey" disabled class="relative overflow-hidden group p-6 rounded-2xl bg-gray-50 border border-gray-200 shadow-none cursor-not-allowed transition-all text-left opacity-60 w-full">
               <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center mb-4" id="icon-bg-survey"><i class="fas fa-poll-h text-2xl text-gray-500 group-hover:text-green-500 transition-colors" id="icon-survey"></i></div>
               <h3 class="text-lg font-bold text-gray-800 mb-1">3. แบบประเมิน</h3>
@@ -176,7 +215,6 @@
               <div class="text-gray-400 text-sm font-medium" id="survey-action">รอสอบ Post-Test <i class="fas fa-lock ml-1"></i></div>
             </button>
 
-            <!-- 4. Certificate -->
             <button onclick="requestCertificate()" id="btn-cert" disabled class="relative overflow-hidden group p-6 rounded-2xl bg-gray-50 border border-gray-200 shadow-none cursor-not-allowed transition-all text-left opacity-60 w-full">
               <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center mb-4" id="icon-bg-cert"><i class="fas fa-award text-2xl text-gray-500 group-hover:text-purple-500 transition-colors" id="icon-cert"></i></div>
               <h3 class="text-lg font-bold text-gray-800 mb-1">4. ใบประกาศ</h3>
@@ -187,7 +225,6 @@
       </div>
     </section>
 
-    <!-- EXAM SECTION -->
     <section id="exam-section" class="page-section">
       <div class="max-w-3xl mx-auto bg-white p-6 md:p-8 rounded-2xl shadow-lg border border-gray-100 mt-8">
          <div class="flex justify-between items-center mb-6 border-b pb-4">
@@ -197,7 +234,8 @@
              </div>
          </div>
          <form id="exam-form" onsubmit="handleExamSubmit(event)">
-             <div id="exam-container" class="space-y-6 mb-8"></div>
+             <div id="exam-container" class="space-y-6 mb-8">
+                 </div>
              <div class="flex gap-4">
                  <button type="button" onclick="navTo('dashboard-section')" class="w-1/3 py-3 rounded-xl bg-gray-100 text-gray-600 font-medium hover:bg-gray-200 transition">ยกเลิก</button>
                  <button type="submit" class="w-2/3 py-3 rounded-xl bg-brand-600 text-white font-medium hover:bg-brand-700 transition shadow-lg shadow-brand-500/30">ส่งคำตอบ</button>
@@ -206,44 +244,24 @@
       </div>
     </section>
 
-    <!-- SURVEY SECTION -->
     <section id="survey-section" class="page-section">
       <div class="max-w-4xl mx-auto bg-white p-6 md:p-8 rounded-2xl shadow-lg border border-gray-100 mt-8">
          <div class="flex justify-between items-center mb-6 border-b pb-4">
              <h2 class="text-2xl font-bold text-gray-800"><i class="fas fa-poll-h text-brand-500 mr-2"></i> แบบประเมินความพึงพอใจ</h2>
              <button onclick="navTo('dashboard-section')" class="text-gray-500 hover:text-gray-800 bg-gray-100 p-2 rounded-lg transition"><i class="fas fa-times text-xl"></i></button>
          </div>
-         <div class="bg-blue-50 text-blue-800 p-4 rounded-xl mb-6 text-sm border border-blue-100">กรุณาทำแบบประเมินแล้วกดปุ่มด้านล่างสุดเพื่อปลดล็อคใบประกาศ</div>
-         <div class="w-full h-[600px] bg-gray-50 rounded-xl mb-6 overflow-hidden border border-gray-200">
-             <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe.../viewform?embedded=true" width="100%" height="100%" frameborder="0">กำลังโหลด…</iframe>
+         
+         <div class="bg-blue-50 text-blue-800 p-4 rounded-xl mb-6 text-sm border border-blue-100">
+             <i class="fas fa-info-circle mr-2"></i> <b>คำแนะนำ:</b> กรุณาทำแบบประเมินในกรอบด้านล่างให้เสร็จสิ้น จากนั้นเลื่อนลงมากดปุ่ม <span class="text-green-600 font-bold">"ทำแบบประเมินเรียบร้อยแล้ว"</span> ด้านล่างสุดเพื่อปลดล็อคใบประกาศนียบัตร
          </div>
+
+         <div class="w-full h-[600px] bg-gray-50 rounded-xl mb-6 overflow-hidden border border-gray-200">
+             <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSf5dSecGWrAXAQhJnW5Dub-1KaIgTs-aS1FnSLCj0yNNk4e7g/viewform?embedded=true" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">กำลังโหลด…</iframe>
+         </div>
+         
          <button onclick="submitSurveyStatus()" class="w-full py-4 rounded-xl bg-green-500 text-white font-bold hover:bg-green-600 transition shadow-lg shadow-green-500/30 text-lg flex justify-center items-center gap-2">
-             <i class="fas fa-check-circle"></i> ทำแบบประเมินเรียบร้อยแล้ว (รับใบประกาศ)
+             <i class="fas fa-check-circle"></i> ทำแบบประเมินเรียบร้อยแล้ว (กดเพื่อรับใบประกาศ)
          </button>
-      </div>
-    </section>
-
-    <!-- PARTICIPANT / CERT SEARCH SECTIONS (Simplified structure) -->
-    <section id="participant-section" class="page-section">
-      <div class="max-w-4xl mx-auto bg-white p-8 rounded-2xl shadow-lg mt-8">
-        <div class="flex justify-between mb-6">
-            <h2 class="text-2xl font-bold">รายชื่อผู้เข้าร่วม</h2>
-            <button onclick="navTo('home-section')"><i class="fas fa-times text-xl"></i></button>
-        </div>
-        <table class="w-full text-left border-collapse"><tbody id="participant-list-body"></tbody></table>
-      </div>
-    </section>
-
-    <section id="cert-section" class="page-section">
-      <div class="max-w-md mx-auto bg-white p-8 rounded-2xl shadow-lg mt-8">
-        <div class="flex justify-between mb-6">
-            <h2 class="text-2xl font-bold">ค้นหาใบประกาศ</h2>
-            <button onclick="navTo('home-section')"><i class="fas fa-times text-xl"></i></button>
-        </div>
-        <form onsubmit="handleCertSearch(event)" autocomplete="off">
-          <input type="email" id="cert-email" required class="w-full py-3 px-4 border rounded-xl mb-4" placeholder="ใส่อีเมลของคุณ">
-          <button type="submit" class="w-full py-3 rounded-xl bg-purple-600 text-white font-medium">ค้นหา</button>
-        </form>
       </div>
     </section>
 
@@ -252,14 +270,15 @@
   <script>
     // ==========================================
     // กำหนด URL ของ Google Apps Script ของคุณที่นี่
+    // (URL ที่ได้จากการ Deploy Code.gs แบบ Web App)
     // ==========================================
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx6u0JGj2MvVhwJnqVohIFe5BvGQFTZ34B0n4az-Br-1U02iafjsoDxivYPXCNU3A3Leg/exec'; 
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw...ใส่_URL_ของคุณที่นี่.../exec';
 
     let currentUser = null;
     let currentExamType = '';
     let examTimerInterval = null;
 
-    // ระบบเชื่อมต่อ API ไปยัง Google Script
+    // ระบบเชื่อมต่อ API ไปยัง Google Script แทน google.script.run
     async function callAPI(action, data) {
         try {
             const response = await fetch(SCRIPT_URL, {
@@ -269,13 +288,20 @@
             return await response.json();
         } catch (error) {
             console.error("API Error:", error);
-            return { status: 'error', message: 'ไม่สามารถติดต่อเซิร์ฟเวอร์ได้ (ตรวจสอบ SCRIPT_URL)' };
+            return { status: 'error', message: 'ไม่สามารถติดต่อเซิร์ฟเวอร์ได้ กรุณาลองใหม่อีกครั้ง' };
         }
     }
 
     function navTo(sectionId) {
-        document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active-section'));
-        setTimeout(() => document.getElementById(sectionId).classList.add('active-section'), 10);
+        document.querySelectorAll('.page-section').forEach(sec => {
+            sec.classList.remove('active-section');
+            sec.style.display = 'none';
+        });
+        const activeSec = document.getElementById(sectionId);
+        activeSec.style.display = 'block';
+        setTimeout(() => {
+            activeSec.classList.add('active-section');
+        }, 10);
     }
 
     function showLoading(show) {
@@ -285,21 +311,25 @@
     // 1. ลงทะเบียน
     async function handleRegister(e) {
         e.preventDefault();
+        const name = document.getElementById('reg-name').value;
         const email = document.getElementById('reg-email').value.trim().toLowerCase();
-        
+
+        // ตรวจสอบโดเมนอีเมลตามที่คุณต้องการ
         if (!email.endsWith('@rmutl.ac.th') && !email.endsWith('@live.rmutl.ac.th')) {
             return Swal.fire('อีเมลไม่ถูกต้อง', 'กรุณาใช้อีเมล @rmutl.ac.th หรือ @live.rmutl.ac.th เท่านั้น', 'warning');
-            document.getElementById('register-form').reset();
         }
 
         showLoading(true);
-        const name = document.getElementById('reg-name').value;
-        const res = await callAPI('registerUser', { name, email });
+        const res = await callAPI('registerUser', {name, email});
         showLoading(false);
 
         if(res.status === 'success') {
             Swal.fire('สำเร็จ', 'ลงทะเบียนเรียบร้อยแล้ว กรุณาเข้าสู่ระบบ', 'success');
-            document.getElementById('register-form').reset();
+            
+            // ล้างข้อมูลช่องกรอก
+            document.getElementById('reg-name').value = '';
+            document.getElementById('reg-email').value = '';
+            
             navTo('login-section');
         } else {
             Swal.fire('ข้อผิดพลาด', res.message, 'error');
@@ -317,7 +347,10 @@
 
         if(res.status === 'success') {
             currentUser = res.user;
-            document.getElementById('login-email').value = ''; // ล้างข้อมูล
+            
+            // ล้างค่าในช่องกรอกเมื่อเข้าสู่ระบบสำเร็จ
+            document.getElementById('login-email').value = '';
+
             renderDashboard();
             navTo('dashboard-section');
         } else {
@@ -325,12 +358,14 @@
         }
     }
 
+    // ออกจากระบบ
     function logout() {
         currentUser = null;
+        document.getElementById('login-form').reset();
         navTo('home-section');
     }
 
-    // 3. จัดการ Dashboard (เช็ค Post-Test ซ้ำ)
+    // 3. จัดการสถานะปุ่มใน Dashboard (แก้ไขตรรกะ Post-Test ทำซ้ำได้)
     function renderDashboard() {
         if(!currentUser) return;
         document.getElementById('user-name-display').innerText = currentUser.name;
@@ -340,69 +375,109 @@
         const btnSurvey = document.getElementById('btn-survey');
         const btnCert = document.getElementById('btn-cert');
 
-        // Pre-test
+        // ==== Pre-test status ====
         if(currentUser.pre_test_done) {
             btnPre.classList.replace('bg-white', 'bg-gray-50');
             btnPre.classList.add('opacity-60', 'cursor-not-allowed');
             document.getElementById('pretest-status').innerText = `ทำแล้ว (คะแนน: ${currentUser.pre_score})`;
-            document.getElementById('pretest-action').innerHTML = 'เสร็จสิ้น <i class="fas fa-check-circle text-green-500"></i>';
-            btnPre.onclick = () => Swal.fire('ข้อมูล', 'ทำ Pre-Test ไปแล้ว', 'info');
+            document.getElementById('pretest-action').innerHTML = 'เสร็จสิ้น <i class="fas fa-check-circle text-green-500 ml-1"></i>';
+            document.getElementById('pretest-action').className = 'text-green-600 text-sm font-medium';
+            btnPre.onclick = () => Swal.fire('ข้อมูล', 'คุณทำ Pre-Test ไปแล้ว', 'info');
         } else {
             btnPre.onclick = () => startTest('pre');
         }
 
-        // Post-test
+        // ==== Post-test status (ให้ทำซ้ำได้ถ้ายังไม่ผ่าน) ====
         if(currentUser.pre_test_done) {
             if (currentUser.post_test_passed) {
+                // สอบผ่านแล้ว ล็อกปุ่ม
                 btnPost.disabled = true;
                 btnPost.classList.add('bg-gray-50', 'opacity-60', 'cursor-not-allowed');
-                document.getElementById('posttest-status').innerText = `ผ่านแล้ว (${currentUser.post_score})`;
-                document.getElementById('posttest-action').innerHTML = 'เสร็จสิ้น <i class="fas fa-check-circle text-green-500"></i>';
-                btnPost.onclick = () => Swal.fire('ข้อมูล', 'สอบผ่าน Post-Test แล้ว', 'info');
+                btnPost.classList.remove('bg-white', 'shadow-sm', 'hover:shadow-xl');
+                
+                document.getElementById('posttest-status').innerText = `ผ่านเกณฑ์แล้ว (คะแนน: ${currentUser.post_score})`;
+                document.getElementById('posttest-action').innerHTML = 'ผ่านเกณฑ์ <i class="fas fa-check-circle text-green-500 ml-1"></i>';
+                document.getElementById('posttest-action').className = 'text-green-600 text-sm font-medium';
+                
+                document.getElementById('icon-bg-post').className = 'w-12 h-12 bg-green-50 rounded-full flex items-center justify-center mb-4';
+                document.getElementById('icon-post').className = 'fas fa-file-alt text-2xl text-green-500';
+                
+                btnPost.onclick = () => Swal.fire('ข้อมูล', 'คุณสอบผ่าน Post-Test เรียบร้อยแล้ว', 'info');
             } else {
+                // ยังสอบไม่ผ่าน (หรือเพิ่งเข้ามาครั้งแรก) ปลดล็อกปุ่ม
                 btnPost.disabled = false;
                 btnPost.classList.remove('bg-gray-50', 'opacity-60', 'cursor-not-allowed');
                 btnPost.classList.add('bg-white', 'shadow-sm', 'hover:shadow-xl');
                 
                 if (currentUser.post_test_done) {
-                    document.getElementById('posttest-status').innerText = `ยังไม่ผ่าน (${currentUser.post_score})`;
-                    document.getElementById('posttest-action').innerHTML = 'สอบใหม่อีกครั้ง <i class="fas fa-redo text-red-500"></i>';
+                    // ทำไปแล้วแต่ตก
+                    document.getElementById('posttest-status').innerText = `ยังไม่ผ่านเกณฑ์ (ได้คะแนน: ${currentUser.post_score})`;
+                    document.getElementById('posttest-action').innerHTML = 'สอบใหม่อีกครั้ง <i class="fas fa-redo ml-1"></i>';
+                    document.getElementById('posttest-action').className = 'text-red-500 text-sm font-medium';
+                    
+                    document.getElementById('icon-bg-post').className = 'w-12 h-12 bg-red-50 rounded-full flex items-center justify-center mb-4';
+                    document.getElementById('icon-post').className = 'fas fa-file-alt text-2xl text-red-500';
                 } else {
+                    // ยังไม่เคยทำ
                     document.getElementById('posttest-status').innerText = 'พร้อมทำแบบทดสอบ';
-                    document.getElementById('posttest-action').innerHTML = 'เริ่มทดสอบ <i class="fas fa-arrow-right"></i>';
+                    document.getElementById('posttest-action').innerHTML = 'เริ่มทำทดสอบ <i class="fas fa-arrow-right ml-1"></i>';
+                    document.getElementById('posttest-action').className = 'text-orange-500 text-sm font-medium';
+                    
+                    document.getElementById('icon-bg-post').className = 'w-12 h-12 bg-orange-50 rounded-full flex items-center justify-center mb-4';
+                    document.getElementById('icon-post').className = 'fas fa-file-alt text-2xl text-orange-500';
                 }
                 btnPost.onclick = () => startTest('post');
             }
+        } else {
+            // ยังไม่ทำ Pre-test ล็อก Post-test
+            btnPost.disabled = true;
+            btnPost.onclick = null;
         }
 
-        // Survey
+        // ==== Survey status ====
         if(currentUser.post_test_passed && !currentUser.survey_done) {
             btnSurvey.disabled = false;
             btnSurvey.classList.remove('bg-gray-50', 'opacity-60', 'cursor-not-allowed');
-            btnSurvey.classList.add('bg-white');
+            btnSurvey.classList.add('bg-white', 'shadow-sm', 'hover:shadow-xl');
+            document.getElementById('survey-status').innerText = 'พร้อมทำแบบประเมิน';
             document.getElementById('survey-action').innerHTML = 'ทำแบบประเมิน <i class="fas fa-arrow-right"></i>';
+            document.getElementById('survey-action').className = 'text-green-500 text-sm font-medium';
+            
+            document.getElementById('icon-bg-survey').className = 'w-12 h-12 bg-green-50 rounded-full flex items-center justify-center mb-4';
+            document.getElementById('icon-survey').className = 'fas fa-poll-h text-2xl text-green-500';
         } else if (currentUser.survey_done) {
             btnSurvey.classList.add('bg-gray-50', 'opacity-60', 'cursor-not-allowed');
-            document.getElementById('survey-action').innerHTML = 'เสร็จสิ้น <i class="fas fa-check-circle text-green-500"></i>';
-            btnSurvey.onclick = () => Swal.fire('ข้อมูล', 'ประเมินเรียบร้อยแล้ว', 'info');
+            btnSurvey.classList.remove('bg-white', 'shadow-sm', 'hover:shadow-xl');
+            document.getElementById('survey-status').innerText = 'ประเมินเรียบร้อยแล้ว';
+            document.getElementById('survey-action').innerHTML = 'เสร็จสิ้น <i class="fas fa-check-circle text-green-500 ml-1"></i>';
+            document.getElementById('survey-action').className = 'text-green-600 text-sm font-medium';
+            
+            document.getElementById('icon-bg-survey').className = 'w-12 h-12 bg-green-50 rounded-full flex items-center justify-center mb-4';
+            document.getElementById('icon-survey').className = 'fas fa-poll-h text-2xl text-green-500';
+            btnSurvey.onclick = () => Swal.fire('ข้อมูล', 'คุณทำแบบประเมินเรียบร้อยแล้ว', 'info');
         }
 
-        // Cert
+        // ==== Cert status ====
         if(currentUser.survey_done) {
             btnCert.disabled = false;
             btnCert.classList.remove('bg-gray-50', 'opacity-60', 'cursor-not-allowed');
-            btnCert.classList.add('bg-white');
+            btnCert.classList.add('bg-white', 'shadow-sm', 'hover:shadow-xl');
+            document.getElementById('cert-status').innerText = 'พร้อมดาวน์โหลด';
             document.getElementById('cert-action').innerHTML = 'รับใบประกาศ <i class="fas fa-download"></i>';
+            document.getElementById('cert-action').className = 'text-purple-500 text-sm font-medium';
+            
+            document.getElementById('icon-bg-cert').className = 'w-12 h-12 bg-purple-50 rounded-full flex items-center justify-center mb-4';
+            document.getElementById('icon-cert').className = 'fas fa-award text-2xl text-purple-500';
         }
     }
 
-    // 4. ข้อสอบ
+    // 4. เริ่มทำข้อสอบ
     async function startTest(type) {
         currentExamType = type;
         showLoading(true);
         const res = await callAPI('getExamQuestions', type);
         showLoading(false);
-        
+
         if(res.status === 'success') {
             renderExam(res.questions, type);
             startTimer(res.timeLimit || 15);
@@ -412,50 +487,79 @@
         }
     }
 
+    // สร้างแบบฟอร์มข้อสอบ
     function renderExam(questions, type) {
-        document.getElementById('exam-title').innerText = type === 'pre' ? 'Pre-Test' : 'Post-Test';
+        document.getElementById('exam-title').innerText = type === 'pre' ? 'Pre-Test (ก่อนเรียน)' : 'Post-Test (หลังเรียน)';
         const container = document.getElementById('exam-container');
         container.innerHTML = '';
         questions.forEach((q, index) => {
-            let html = `<div class="bg-gray-50 p-6 rounded-xl border border-gray-100 mb-4"><p class="font-medium mb-4">${index + 1}. ${q.q}</p><div class="space-y-3">`;
+            let html = `
+            <div class="bg-gray-50 p-6 rounded-xl border border-gray-100">
+                <p class="font-medium text-gray-800 mb-4">${index + 1}. ${q.q}</p>
+                <div class="space-y-3">
+            `;
             q.choices.forEach(c => {
-                html += `<label class="flex items-center p-3 border rounded-lg cursor-pointer bg-white">
-                    <input type="radio" name="${q.id}" value="${c.key}" required class="w-4 h-4 text-brand-600">
+                html += `
+                <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-white transition bg-white/50">
+                    <input type="radio" name="${q.id}" value="${c.key}" required class="w-4 h-4 text-brand-600 focus:ring-brand-500">
                     <span class="ml-3 text-gray-700">${c.text}</span>
-                </label>`;
+                </label>
+                `;
             });
-            container.innerHTML += html + `</div></div>`;
+            html += `</div></div>`;
+            container.innerHTML += html;
         });
     }
 
+    // จับเวลาข้อสอบ
     function startTimer(minutes) {
         let time = minutes * 60;
         clearInterval(examTimerInterval);
+        const display = document.getElementById('exam-timer');
         examTimerInterval = setInterval(() => {
-            document.getElementById('exam-timer').innerText = `${Math.floor(time / 60).toString().padStart(2, '0')}:${(time % 60).toString().padStart(2, '0')}`;
+            const m = Math.floor(time / 60);
+            const s = time % 60;
+            display.innerText = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
             if(time <= 0) {
                 clearInterval(examTimerInterval);
-                document.getElementById('exam-form').dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+                Swal.fire('หมดเวลา', 'ระบบกำลังส่งคำตอบอัตโนมัติ', 'info').then(() => {
+                    document.getElementById('exam-form').dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+                });
             }
             time--;
         }, 1000);
     }
 
+    // ส่งข้อสอบ
     async function handleExamSubmit(e) {
         e.preventDefault();
         clearInterval(examTimerInterval);
         const formData = new FormData(e.target);
-        const answers = Object.fromEntries(formData.entries());
+        
+        // แปลง formData ให้เป็น Object ที่ใช้งานง่าย
+        const answers = {};
+        for (let [key, value] of formData.entries()) {
+            answers[key] = value;
+        }
 
         showLoading(true);
-        const res = await callAPI('submitExam', { email: currentUser.email, answers, type: currentExamType });
-        
+        const res = await callAPI('submitExam', { email: currentUser.email, answers: answers, type: currentExamType });
+        showLoading(false);
+
         if(res.status === 'success') {
             let msg = `คุณได้คะแนน ${res.score}/${res.total}`;
-            if(currentExamType === 'post') msg += res.passed ? '<br><br><span class="text-green-500 font-bold">ผ่านเกณฑ์!</span>' : '<br><br><span class="text-red-500 font-bold">ยังไม่ผ่าน (สอบใหม่ได้)</span>';
             
+            if(currentExamType === 'post') {
+                if (res.passed) {
+                    msg += '<br><br><span class="text-green-500 font-bold text-lg">ยินดีด้วย! คุณผ่านเกณฑ์การทดสอบ</span>';
+                } else {
+                    msg += '<br><br><span class="text-red-500 font-bold text-lg">ยังไม่ผ่านเกณฑ์ (สามารถสอบใหม่ได้)</span>';
+                }
+            }
+
             Swal.fire('ส่งคำตอบเรียบร้อย', msg, res.passed !== false ? 'success' : 'warning').then(async () => {
                 showLoading(true);
+                // ดึงข้อมูลผู้ใช้มาใหม่เพื่ออัปเดต Dashboard
                 const loginRes = await callAPI('loginUser', currentUser.email);
                 showLoading(false);
                 if(loginRes.status === 'success') {
@@ -465,77 +569,140 @@
                 }
             });
         } else {
-            showLoading(false);
             Swal.fire('ข้อผิดพลาด', res.message, 'error');
         }
     }
 
-    // 5. บันทึก Survey
+    // 5. บันทึกสถานะว่าทำแบบประเมินเสร็จแล้ว
     async function submitSurveyStatus() {
         showLoading(true);
         const res = await callAPI('markSurveyDone', currentUser.email);
         showLoading(false);
+        
         if(res.status === 'success') {
-            Swal.fire('สำเร็จ', 'ปลดล็อคใบประกาศให้คุณแล้ว', 'success').then(() => {
+            Swal.fire('สำเร็จ', 'บันทึกการทำแบบประเมินเรียบร้อยแล้ว<br>ระบบได้ปลดล็อคใบประกาศให้คุณแล้ว', 'success').then(() => {
                  currentUser.survey_done = true;
                  renderDashboard();
                  navTo('dashboard-section');
             });
-        }
-    }
-
-    // 6. ขอใบประกาศ
-    async function requestCertificate() {
-        showLoading(true);
-        const res = await callAPI('getCertificate', currentUser.email);
-        showLoading(false);
-        if(res.status === 'success') {
-            window.open(res.url, '_blank');
         } else {
             Swal.fire('ข้อผิดพลาด', res.message, 'error');
         }
     }
 
-    // 7. อื่นๆ (แก้ชื่อ, โหลดรายชื่อ, ค้นหาใบประกาศ)
-    async function editProfileName() {
-        const { value: newName } = await Swal.fire({ title: 'แก้ไขชื่อ-นามสกุล', input: 'text', inputValue: currentUser.name, showCancelButton: true });
-        if (newName) {
-            showLoading(true);
-            const res = await callAPI('updateUserProfile', { email: currentUser.email, newName });
-            showLoading(false);
-            if(res.status === 'success') {
-                currentUser.name = res.newName;
-                document.getElementById('user-name-display').innerText = currentUser.name;
-                Swal.fire('สำเร็จ', 'อัปเดตชื่อเรียบร้อย', 'success');
-            }
+    // 6. ขอรับใบประกาศ (โหลด PDF)
+    async function requestCertificate() {
+        showLoading(true);
+        const res = await callAPI('getCertificate', currentUser.email);
+        showLoading(false);
+        
+        if(res.status === 'success') {
+            Swal.fire({
+                title: 'สำเร็จ',
+                text: 'สร้างใบประกาศนียบัตรเรียบร้อยแล้ว',
+                icon: 'success',
+                confirmButtonText: 'ดาวน์โหลด / เปิดดู',
+                confirmButtonColor: '#8b5cf6'
+            }).then((result) => {
+                if(result.isConfirmed) {
+                    window.open(res.url, '_blank');
+                }
+            });
+        } else {
+            Swal.fire('ข้อผิดพลาด', res.message, 'error');
         }
     }
 
+    // 7. แก้ไขชื่อ-นามสกุล
+    function editProfileName() {
+        Swal.fire({
+            title: 'แก้ไขชื่อ-นามสกุล',
+            text: 'ชื่อนี้จะถูกใช้พิมพ์ลงบนใบประกาศนียบัตร',
+            input: 'text',
+            inputValue: currentUser.name,
+            showCancelButton: true,
+            confirmButtonText: 'บันทึก',
+            cancelButtonText: 'ยกเลิก',
+            inputValidator: (value) => {
+                if (!value || value.trim() === '') return 'กรุณาระบุชื่อ-นามสกุล!';
+            }
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                showLoading(true);
+                const res = await callAPI('updateUserProfile', { email: currentUser.email, newName: result.value });
+                showLoading(false);
+
+                if(res.status === 'success') {
+                    currentUser.name = res.newName || result.value;
+                    document.getElementById('user-name-display').innerText = currentUser.name;
+                    Swal.fire('สำเร็จ', res.message, 'success');
+                } else {
+                    Swal.fire('ข้อผิดพลาด', res.message, 'error');
+                }
+            }
+        });
+    }
+
+    // ฟังก์ชันเสริมรายชื่อ
     async function loadParticipantList() {
         showLoading(true);
         const res = await callAPI('getParticipants', {});
         showLoading(false);
+
         if(res.status === 'success') {
             const tbody = document.getElementById('participant-list-body');
-            tbody.innerHTML = res.data.length ? res.data.map((p, i) => `<tr class="border-b"><td class="p-4">${i+1}</td><td class="p-4">${p.name}</td></tr>`).join('') : '<tr><td colspan="2" class="p-4 text-center">ไม่มีข้อมูล</td></tr>';
+            tbody.innerHTML = '';
+            if(res.data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="2" class="p-4 text-center text-gray-500">ยังไม่มีผู้ลงทะเบียน</td></tr>';
+            } else {
+                res.data.forEach((p, i) => {
+                    tbody.innerHTML += `<tr class="border-b border-gray-100 hover:bg-gray-50"><td class="p-4 text-gray-500">${i+1}</td><td class="p-4 text-gray-800">${p.name}</td></tr>`;
+                });
+            }
             navTo('participant-section');
+        } else {
+            Swal.fire('ข้อผิดพลาด', 'ไม่สามารถโหลดข้อมูลได้', 'error');
         }
     }
 
+    // ฟังก์ชันค้นหาใบประกาศ (สำหรับผู้ใช้งานทั่วไป)
     async function handleCertSearch(e) {
         e.preventDefault();
         const email = document.getElementById('cert-email').value;
+        
         showLoading(true);
         const res = await callAPI('getCertificate', email);
         showLoading(false);
+
         if(res.status === 'success') {
-            window.open(res.url, '_blank');
+             Swal.fire({
+                title: 'พบข้อมูล',
+                text: 'คลิกเพื่อดาวน์โหลดหรือเปิดดูใบประกาศนียบัตร',
+                icon: 'success',
+                confirmButtonText: 'เปิดใบประกาศ',
+                confirmButtonColor: '#8b5cf6'
+            }).then((result) => {
+                if(result.isConfirmed) window.open(res.url, '_blank');
+            });
+            document.getElementById('cert-email').value = '';
+            toggleClearCertBtn();
         } else {
             Swal.fire('ไม่พบข้อมูล', res.message, 'error');
+            document.getElementById('cert-email').value = '';
+            toggleClearCertBtn();
         }
+    }
+
+    function toggleClearCertBtn() {
+        const input = document.getElementById('cert-email');
+        const btn = document.getElementById('clear-cert-btn');
+        btn.classList.toggle('hidden', input.value.length === 0);
+    }
+
+    function clearCertInput() {
+        document.getElementById('cert-email').value = '';
+        toggleClearCertBtn();
     }
   </script>
 </body>
-
 </html>
-

@@ -289,7 +289,7 @@
         
         if (!email.endsWith('@rmutl.ac.th') && !email.endsWith('@live.rmutl.ac.th')) {
             return Swal.fire('อีเมลไม่ถูกต้อง', 'กรุณาใช้อีเมล @rmutl.ac.th หรือ @live.rmutl.ac.th เท่านั้น', 'warning');
-            document.getElementById('register-form').reset();
+            document.getElementById('reg-email').reset();
         }
 
         showLoading(true);
@@ -536,4 +536,5 @@
     }
   </script>
 </body>
+
 </html>

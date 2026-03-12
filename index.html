@@ -643,7 +643,7 @@
         if(res.status === 'success') {
             Swal.fire({
                 title: 'สำเร็จ',
-                text: 'สร้างใบประกาศนียบัตรเรียบร้อยแล้ว',
+                text: 'สร้างใบประกาศนียบัตรเรียบร้อยแล้ว<br><span class="text-gray-500 text-sm">รหัสอ้างอิง: <b>${res.code || '-'}</b></span>`,
                 icon: 'success',
                 confirmButtonText: 'ดาวน์โหลด / เปิดดู',
                 confirmButtonColor: '#8b5cf6'
@@ -721,7 +721,7 @@
         if(res.status === 'success') {
              Swal.fire({
                 title: 'พบข้อมูล',
-                text: 'คลิกเพื่อดาวน์โหลดหรือเปิดดูใบประกาศนียบัตร',
+                text: 'คลิกเพื่อดาวน์โหลดหรือเปิดดูใบประกาศนียบัตร<br><span class="text-gray-500 text-sm">รหัสอ้างอิง: <b>${res.code || '-'}</b></span>`,
                 icon: 'success',
                 confirmButtonText: 'เปิดใบประกาศ',
                 confirmButtonColor: '#8b5cf6'
@@ -750,6 +750,7 @@
   </script>
 </body>
 </html>
+
 
 
 
